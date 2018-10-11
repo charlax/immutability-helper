@@ -185,6 +185,24 @@ const newCollection = update(collection, {children: {[index]: {$set: 1}}});
 // => {children: ['zero', 1, 'two']}
 ```
 
+### Removing an element from an array
+
+```js
+// Delete at a specific index, no matter what value is in it
+update(state, { items: { $splice: [[index, 1]] } });
+
+// Delete a value (7) if found, all occurrences
+update(state, {
+  items: arr => arr.filter(item => item != 7),
+})
+
+// Delete a value (7) if found, first occurrence only
+const index = state.items.indexOf(7);
+if (index >= 0) {
+  update(state, { items: { $splice: [[index, 1]] } });
+}
+```
+
 ### [Autovivification](https://en.wikipedia.org/wiki/Autovivification)
 
 Autovivification is the auto creation of new arrays and objects when needed. In
